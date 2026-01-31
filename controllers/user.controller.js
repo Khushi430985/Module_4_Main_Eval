@@ -1,20 +1,20 @@
-const supabase = require('../config/supabase');
-exports.signup = async (req,res) => {
-    try{
-        const { name, email, password, role} = req.body;
-        if(!['customer','owner','driver'].includes(role)){
-            return res.status(400).json({message: 'Invalid role'});
-        }
+const supabase = require("../config/supabase");
 
-        const { data,error } = await supabase
-        .from('users')
-        .insert([{ name, email, password, role }]);
+exports.signup = async (req, res) => {
+  const { name, email, password, role } = req.body;
 
-        if (error) throw error;
+  const { data, error } = await supabase
+    .from("users")
+    .insert([{ name, email, password, role }])
+    .select("*")
+    .single();
 
-        res.status(201).json({message: 'User created', data});
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
 
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  res.status(200).json({
+    message: "User Signup Success",
+    details: data
+  });
 };

@@ -1,21 +1,12 @@
-const express = require('express');
-const router = express.Router();
-
+const express = require("express");
 const {
   createTrip,
-  updateTrip,
-  getTrip,
-  deleteTrip,
   endTrip
-} = require('../controllers/trip.controller');
+} = require("../controllers/trip.controller");
 
-// Customer only
-router.post('/create', createTrip);
-router.patch('/update/:tripId', updateTrip);
-router.get('/:tripId', getTrip);
-router.delete('/delete/:tripId', deleteTrip);
+const router = express.Router();
 
-// End trip feature
-router.patch('/end/:tripId', endTrip);
+router.post("/create", createTrip);
+router.patch("/end/:id", endTrip);
 
 module.exports = router;

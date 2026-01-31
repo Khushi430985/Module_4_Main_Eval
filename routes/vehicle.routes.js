@@ -1,15 +1,14 @@
-const express = require('express');
+const express = require("express");
+const {
+  createVehicle,
+  getVehicleById,
+  assignDriver
+} = require("../controllers/vehicle.controller");
+
 const router = express.Router();
 
-const {
-  addVehicle,
-  assignDriver,
-  getVehicle
-} = require('../controllers/vehicle.controller');
-
-// Owner only
-router.post('/add', addVehicle);
-router.patch('/assign-driver/:vehicleId', assignDriver);
-router.get('/:vehicleId', getVehicle);
+router.post("/add", createVehicle);                 // CREATE
+router.get("/:id", getVehicleById);                 // GET
+router.patch("/assign-driver/:id", assignDriver);   // ASSIGN
 
 module.exports = router;
